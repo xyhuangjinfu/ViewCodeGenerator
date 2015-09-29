@@ -23,9 +23,11 @@ public class WorkUI {
     private MyWin mMyWin;
     
     private CodeGenerator mCodeGenerator;
+    private OS mOS;
     
     public WorkUI() {
         mCodeGenerator = new CodeGenerator();
+        mOS = new OS();
     }
 
     public void show() {
@@ -43,8 +45,8 @@ public class WorkUI {
 
         mJavaFileDialog = new FileDialog(new Frame(), "java", FileDialog.LOAD);
         mXmlFileDialog = new FileDialog(new Frame(), "xml", FileDialog.LOAD);
-        mJavaFileDialog.setDirectory("/home");
-        mXmlFileDialog.setDirectory("/home");
+        mJavaFileDialog.setDirectory(mOS.getMainDir());
+        mXmlFileDialog.setDirectory(mOS.getMainDir());
 
         mMainFrame.add(mJavaPathLabel);
         mMainFrame.add(mChooseJavaButton);
