@@ -37,14 +37,14 @@ public class WorkUI {
         mMainFrame.setLocation(300, 200);
         mMainFrame.setLayout(new FlowLayout());
 
-        mGenerateButton = new Button("生成");
-        mChooseJavaButton = new Button("选择java");
-        mXmlJavaButton = new Button("选择xml");
-        mJavaPathLabel = new Label("java地址");
-        mXmlPathLabel = new Label("xml地址");
+        mGenerateButton = new Button("Generator Code");
+        mChooseJavaButton = new Button("Choose Java File");
+        mXmlJavaButton = new Button("Choose Xml File");
+        mJavaPathLabel = new Label("Java File Path");
+        mXmlPathLabel = new Label("Xml File Path");
 
-        mJavaFileDialog = new FileDialog(new Frame(), "java", FileDialog.LOAD);
-        mXmlFileDialog = new FileDialog(new Frame(), "xml", FileDialog.LOAD);
+        mJavaFileDialog = new FileDialog(new Frame(), "Choose Java File", FileDialog.LOAD);
+        mXmlFileDialog = new FileDialog(new Frame(), "Choose Xml File", FileDialog.LOAD);
         mJavaFileDialog.setDirectory(mOS.getMainDir());
         mXmlFileDialog.setDirectory(mOS.getMainDir());
 
