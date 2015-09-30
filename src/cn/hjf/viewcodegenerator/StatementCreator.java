@@ -17,6 +17,9 @@ public class StatementCreator {
         sb.append(" ");
         sb.append(mFieldTransfer.getNameById(field.getId()));
         sb.append(";");
+        sb.append(" ");
+        sb.append("//");
+        sb.append(field.getAnnotation());
         System.out.println(sb.toString());
         return sb.toString();
     }
