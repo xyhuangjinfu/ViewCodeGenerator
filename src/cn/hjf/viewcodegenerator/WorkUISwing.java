@@ -26,7 +26,9 @@ public class WorkUISwing {
     private JLabel mXmlPathLabel;
     private JFileChooser mJavaFileChooser;
     private JFileChooser mXmlFileChooser;
-//    private JPanel
+    private JPanel mJavaPanel;
+    private JPanel mXmlPanel;
+    private JPanel mGeneratorPanel;
     
     private CodeGenerator mCodeGenerator;
     private OS mOS;
@@ -38,8 +40,8 @@ public class WorkUISwing {
     
     public void show() {
         mMainFrame = new JFrame("代码生成器");
-        mMainFrame.setSize(1000, 500);
-        mMainFrame.setLayout(new GridLayout(3, 2));
+        mMainFrame.setLocation(400, 400);
+        mMainFrame.setLayout(new GridLayout(3, 1));
         mMainFrame.addWindowListener(new WindowListener() {
             @Override
             public void windowOpened(WindowEvent e) {
@@ -65,6 +67,9 @@ public class WorkUISwing {
             }
         });
         
+        mJavaPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        mXmlPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        
         mGenerateButton = new JButton("生成代码");
         mGenerateButton.setSize(100, 100);
         mChooseJavaButton = new JButton("选择Java文件(Activity等)");
@@ -75,11 +80,15 @@ public class WorkUISwing {
         mJavaPathLabel = new JLabel("Java文件路径");
         mXmlPathLabel = new JLabel("Xml文件路径");
         
-        mMainFrame.add(mChooseJavaButton);
-        mMainFrame.add(mJavaPathLabel);
+        mJavaPanel.add(mChooseJavaButton);
+        mJavaPanel.add(mJavaPathLabel);
         
-        mMainFrame.add(mChooseXmlButton);
-        mMainFrame.add(mXmlPathLabel);
+        mMainFrame.add(mJavaPanel);
+        
+        mXmlPanel.add(mChooseXmlButton);
+        mXmlPanel.add(mXmlPathLabel);
+        
+        mMainFrame.add(mXmlPanel);
         
         mMainFrame.add(mGenerateButton);
         
@@ -114,6 +123,7 @@ public class WorkUISwing {
             public void actionPerformed(ActionEvent e) {
                 mJavaFileChooser.showOpenDialog(null);
                 mJavaPathLabel.setText(mJavaFileChooser.getSelectedFile().getAbsolutePath());
+                mMainFrame.pack();
             }
         });
         mChooseXmlButton.addActionListener(new ActionListener() {
@@ -121,6 +131,7 @@ public class WorkUISwing {
             public void actionPerformed(ActionEvent e) {
                 mXmlFileChooser.showOpenDialog(null);
                 mXmlPathLabel.setText(mXmlFileChooser.getSelectedFile().getAbsolutePath());
+                mMainFrame.pack();
             }
         });
         mGenerateButton.addActionListener(new ActionListener() {
@@ -132,6 +143,7 @@ public class WorkUISwing {
             }
         });
         
+        mMainFrame.pack();
         mMainFrame.setVisible(true);
         
     }
