@@ -8,9 +8,14 @@ public class OS {
         String dir = null;
         Properties prop = System.getProperties();
         String os = prop.getProperty("os.name");
+        System.out.println(os);
         // windows操作系统
         if (os.startsWith("win") || os.startsWith("Win")) {
             dir = "C:";
+        } 
+        // Linux
+        else if (os.startsWith("Lin") || os.startsWith("lin")) {
+            dir = "/home";
         }
         return dir;
     }
