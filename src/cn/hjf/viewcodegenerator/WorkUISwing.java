@@ -10,6 +10,7 @@ import java.awt.event.WindowListener;
 import java.io.File;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,7 +29,8 @@ public class WorkUISwing {
     private JFileChooser mXmlFileChooser;
     private JPanel mJavaPanel;
     private JPanel mXmlPanel;
-    private JPanel mGeneratorPanel;
+    private JDialog mResultDialog;
+    private JLabel mResultLabel;
     
     private CodeGenerator mCodeGenerator;
     private OS mOS;
@@ -69,6 +71,12 @@ public class WorkUISwing {
         
         mJavaPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         mXmlPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        
+        mResultDialog = new JDialog(mMainFrame, "生成结果", true);
+        mResultDialog.setSize(200, 100);
+        mResultDialog.setLocation(500, 500);
+        mResultLabel = new JLabel();
+        mResultDialog.add(mResultLabel);
         
         mGenerateButton = new JButton("生成代码");
         mGenerateButton.setSize(100, 100);
@@ -138,7 +146,16 @@ public class WorkUISwing {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (mJavaPathLabel.getText().endsWith(".java") && mXmlPathLabel.getText().endsWith(".xml")) {
-                    mCodeGenerator.generate(mJavaPathLabel.getText(), mXmlPathLabel.getText());
+                    if (mCodeGenerator.generate(mJavaPathLabel.getText(), mXmlPathLabel.getText())) {
+                        mResultLabel.setText("成功");
+                        mResultDialog.setVisible(true);
+                    } else {
+                        mResultLabel.setText("失败");
+                        mResultDialog.setVisible(true);
+                    }
+                } else {
+                    mResultLabel.setText("请选择文件");
+                    mResultDialog.setVisible(true);
                 }
             }
         });

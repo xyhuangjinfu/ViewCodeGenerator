@@ -14,6 +14,7 @@ public class CodeWriter {
     }
 
     public boolean write(File javaFile, List<Field> fields) {
+        boolean result = true;
         try {
             FileWriter fw = new FileWriter(javaFile, true);
             BufferedWriter writer = new BufferedWriter(fw);
@@ -33,10 +34,11 @@ public class CodeWriter {
             writer.close();
             fw.close();
         } catch (Exception e) {
+            result = false;
             e.printStackTrace();
         }
 
-        return true;
+        return result;
     }
 
 }
