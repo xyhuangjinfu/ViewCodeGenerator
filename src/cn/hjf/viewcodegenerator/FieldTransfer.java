@@ -1,5 +1,8 @@
 package cn.hjf.viewcodegenerator;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class FieldTransfer {
 
     public FieldTransfer() {
@@ -16,11 +19,15 @@ public class FieldTransfer {
         // 拼接成员变量名称头部
         sb.append("m");
         // 每个单词首字母大写
-        for (String string : words) {
-            char[] cs = string.toCharArray();
-            cs[0] -= 32;
+        for (String word : words) {
+            StringBuffer stringbf = new StringBuffer();
+            Matcher matcher = Pattern.compile("([a-z])([a-z]*)", Pattern.CASE_INSENSITIVE).matcher(word);
+            while (matcher.find()) {
+                matcher.appendReplacement(stringbf, matcher.group(1).toUpperCase() + matcher.group(2).toLowerCase());
+            }
             // 拼接单词
-            sb.append(String.valueOf(cs));
+            sb.append(matcher.appendTail(stringbf).toString());
+
         }
         return sb.toString();
     }
