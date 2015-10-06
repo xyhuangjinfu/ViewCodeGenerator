@@ -41,7 +41,7 @@ public class FieldParserDom4j implements IFieldParser {
             int count = fileinput.available();
             byte[] cache = new byte[count];
             fileinput.read(cache);
-            String xmlDocument = new String(cache);
+            String xmlDocument = new String(cache, "UTF-8");
             document = DocumentHelper.parseText(xmlDocument);
             Element rootElement = document.getRootElement();
             listNodes(rootElement);
