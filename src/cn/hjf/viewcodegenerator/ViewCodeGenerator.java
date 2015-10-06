@@ -1,5 +1,7 @@
 package cn.hjf.viewcodegenerator;
 
+import cn.hjf.viewcodegenerator.ui.WorkUISwing;
+
 public class ViewCodeGenerator {
 
     /**

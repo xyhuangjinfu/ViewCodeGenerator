@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.List;
 
+import cn.hjf.viewcodegenerator.model.Field;
+
 public class CodeWriter {
 
     private StatementCreator mStatementCreator;

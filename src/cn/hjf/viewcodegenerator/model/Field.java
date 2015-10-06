@@ -1,4 +1,4 @@
-package cn.hjf.viewcodegenerator;
+package cn.hjf.viewcodegenerator.model;
 
 public final class Field {
 

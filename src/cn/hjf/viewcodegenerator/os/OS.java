@@ -1,4 +1,4 @@
-package cn.hjf.viewcodegenerator;
+package cn.hjf.viewcodegenerator.os;
 
 import java.util.Properties;
 

@@ -1,5 +1,7 @@
 package cn.hjf.viewcodegenerator;
 
+import cn.hjf.viewcodegenerator.model.Field;
+
 public class StatementCreator {
 
     private FieldTransfer mFieldTransfer;

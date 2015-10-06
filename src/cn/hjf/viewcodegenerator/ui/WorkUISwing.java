@@ -1,21 +1,27 @@
-package cn.hjf.viewcodegenerator;
+package cn.hjf.viewcodegenerator.ui;
 
-import java.awt.Button;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileFilter;
+
+import cn.hjf.viewcodegenerator.CodeGenerator;
+import cn.hjf.viewcodegenerator.model.WorkMode;
+import cn.hjf.viewcodegenerator.os.OS;
 
 public class WorkUISwing {
     
@@ -31,9 +37,15 @@ public class WorkUISwing {
     private JPanel mXmlPanel;
     private JDialog mResultDialog;
     private JLabel mResultLabel;
+    private JComboBox<WorkMode> mWorkModeComboBox;
+    private JPanel mWorkModePanel;
+    private JLabel mWorkModeLabel;
     
     private CodeGenerator mCodeGenerator;
     private OS mOS;
+    
+    private String mLastPath;
+    private WorkMode mWorkMode;
     
     public WorkUISwing() {
         mCodeGenerator = new CodeGenerator();
@@ -42,8 +54,8 @@ public class WorkUISwing {
     
     public void show() {
         mMainFrame = new JFrame("代码生成器 V0.1");
-        mMainFrame.setLocation(400, 400);
-        mMainFrame.setLayout(new GridLayout(3, 1));
+        mMainFrame.setLocation(500, 300);
+        mMainFrame.setLayout(new GridLayout(4, 1));
         mMainFrame.addWindowListener(new WindowListener() {
             @Override
             public void windowOpened(WindowEvent e) {
@@ -71,10 +83,21 @@ public class WorkUISwing {
         
         mJavaPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         mXmlPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        mWorkModePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        
+        mWorkModeComboBox = new JComboBox<WorkMode>();
+        
+        mWorkModeComboBox.addItem(new WorkMode("使用注释（根据注释和id生成代码）", WorkMode.Mode.BY_COMMENT));
+        mWorkModeComboBox.addItem(new WorkMode("不使用注释 （根据id生成代码）", WorkMode.Mode.BY_ID));
+        mWorkModeLabel = new JLabel("工作模式");
+        mWorkMode = new WorkMode("使用注释（根据注释和id生成代码）", WorkMode.Mode.BY_COMMENT);
+        
+        mWorkModePanel.add(mWorkModeLabel);
+        mWorkModePanel.add(mWorkModeComboBox);
         
         mResultDialog = new JDialog(mMainFrame, "生成结果", true);
         mResultDialog.setSize(200, 100);
-        mResultDialog.setLocation(500, 500);
+        mResultDialog.setLocation(600, 400);
         mResultLabel = new JLabel();
         mResultDialog.add(mResultLabel);
         
@@ -98,10 +121,12 @@ public class WorkUISwing {
         
         mMainFrame.add(mXmlPanel);
         
+        mMainFrame.add(mWorkModePanel);
+        
         mMainFrame.add(mGenerateButton);
         
-        
-        mJavaFileChooser = new JFileChooser(mOS.getMainDir());
+        mLastPath = mOS.getMainDir();
+        mJavaFileChooser = new JFileChooser(mLastPath);
         mJavaFileChooser.setFileFilter(new FileFilter() {
             @Override
             public String getDescription() {
@@ -113,7 +138,7 @@ public class WorkUISwing {
                 return f.getName().endsWith(".java");
             }
         });
-        mXmlFileChooser = new JFileChooser(mOS.getMainDir());
+        mXmlFileChooser = new JFileChooser(mLastPath);
         mXmlFileChooser.setFileFilter(new FileFilter() {
             @Override
             public String getDescription() {
@@ -131,6 +156,9 @@ public class WorkUISwing {
             public void actionPerformed(ActionEvent e) {
                 mJavaFileChooser.showOpenDialog(null);
                 mJavaPathLabel.setText(mJavaFileChooser.getSelectedFile().getAbsolutePath());
+                mLastPath = mJavaFileChooser.getSelectedFile().getParent();
+                mXmlFileChooser.setCurrentDirectory(new File(mLastPath));
+                mJavaFileChooser.setCurrentDirectory(new File(mLastPath));
                 mMainFrame.pack();
             }
         });
@@ -139,6 +167,9 @@ public class WorkUISwing {
             public void actionPerformed(ActionEvent e) {
                 mXmlFileChooser.showOpenDialog(null);
                 mXmlPathLabel.setText(mXmlFileChooser.getSelectedFile().getAbsolutePath());
+                mLastPath = mXmlFileChooser.getSelectedFile().getParent();
+                mXmlFileChooser.setCurrentDirectory(new File(mLastPath));
+                mJavaFileChooser.setCurrentDirectory(new File(mLastPath));
                 mMainFrame.pack();
             }
         });
@@ -146,7 +177,7 @@ public class WorkUISwing {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (mJavaPathLabel.getText().endsWith(".java") && mXmlPathLabel.getText().endsWith(".xml")) {
-                    if (mCodeGenerator.generate(mJavaPathLabel.getText(), mXmlPathLabel.getText())) {
+                    if (mCodeGenerator.generate(mJavaPathLabel.getText(), mXmlPathLabel.getText(), mWorkMode)) {
                         mResultLabel.setText("成功");
                         mResultDialog.setVisible(true);
                     } else {
@@ -156,6 +187,21 @@ public class WorkUISwing {
                 } else {
                     mResultLabel.setText("请选择文件");
                     mResultDialog.setVisible(true);
+                }
+            }
+        });
+        
+        mWorkModeComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
+        mWorkModeComboBox.addItemListener(new ItemListener() {
+            
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    mWorkMode = (WorkMode) e.getItem();
                 }
             }
         });
