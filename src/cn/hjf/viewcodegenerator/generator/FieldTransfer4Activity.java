@@ -1,11 +1,11 @@
-package cn.hjf.viewcodegenerator;
+package cn.hjf.viewcodegenerator.generator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class FieldTransfer {
+public class FieldTransfer4Activity {
 
-    public FieldTransfer() {
+    public FieldTransfer4Activity() {
 
     }
 

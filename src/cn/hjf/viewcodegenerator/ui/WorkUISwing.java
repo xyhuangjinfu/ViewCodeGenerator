@@ -19,7 +19,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileFilter;
 
-import cn.hjf.viewcodegenerator.CodeGenerator;
+import cn.hjf.viewcodegenerator.generator.CodeGenerator4Activity;
+import cn.hjf.viewcodegenerator.generator.CodeGenerator4Adapter;
+import cn.hjf.viewcodegenerator.model.Target;
 import cn.hjf.viewcodegenerator.model.WorkMode;
 import cn.hjf.viewcodegenerator.os.OS;
 
@@ -40,22 +42,28 @@ public class WorkUISwing {
     private JComboBox<WorkMode> mWorkModeComboBox;
     private JPanel mWorkModePanel;
     private JLabel mWorkModeLabel;
+    private JComboBox<Target> mTargetComboBox;
+    private JPanel mTargetPanel;
+    private JLabel mTargetLabel;
     
-    private CodeGenerator mCodeGenerator;
+    private CodeGenerator4Activity mCodeGenerator4Activity;
+    private CodeGenerator4Adapter mCodeGenerator4Adapter;
     private OS mOS;
     
     private String mLastPath;
     private WorkMode mWorkMode;
+    private Target mTarget;
     
     public WorkUISwing() {
-        mCodeGenerator = new CodeGenerator();
+        mCodeGenerator4Activity = new CodeGenerator4Activity();
+        mCodeGenerator4Adapter = new CodeGenerator4Adapter();
         mOS = new OS();
     }
     
     public void show() {
         mMainFrame = new JFrame("代码生成器 V0.1");
         mMainFrame.setLocation(500, 300);
-        mMainFrame.setLayout(new GridLayout(4, 1));
+        mMainFrame.setLayout(new GridLayout(5, 1));
         mMainFrame.addWindowListener(new WindowListener() {
             @Override
             public void windowOpened(WindowEvent e) {
@@ -84,6 +92,7 @@ public class WorkUISwing {
         mJavaPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         mXmlPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         mWorkModePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        mTargetPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         
         mWorkModeComboBox = new JComboBox<WorkMode>();
         
@@ -91,6 +100,12 @@ public class WorkUISwing {
         mWorkModeComboBox.addItem(new WorkMode("不使用注释 （根据id生成代码）", WorkMode.Mode.BY_ID));
         mWorkModeLabel = new JLabel("工作模式");
         mWorkMode = new WorkMode("使用注释（根据注释和id生成代码）", WorkMode.Mode.BY_COMMENT);
+        
+        mTargetComboBox = new JComboBox<Target>();
+        mTargetComboBox.addItem(new Target("Activity", Target.T.ACTIVITY));
+        mTargetComboBox.addItem(new Target("Adapter", Target.T.ADAPTER));
+        mTargetLabel = new JLabel("生成目标");
+        mTarget = new Target("Activity", Target.T.ACTIVITY);
         
         mWorkModePanel.add(mWorkModeLabel);
         mWorkModePanel.add(mWorkModeComboBox);
@@ -100,6 +115,9 @@ public class WorkUISwing {
         mResultDialog.setLocation(600, 400);
         mResultLabel = new JLabel();
         mResultDialog.add(mResultLabel);
+        
+        mTargetPanel.add(mTargetLabel);
+        mTargetPanel.add(mTargetComboBox);
         
         mGenerateButton = new JButton("生成代码");
         mGenerateButton.setSize(100, 100);
@@ -122,6 +140,8 @@ public class WorkUISwing {
         mMainFrame.add(mXmlPanel);
         
         mMainFrame.add(mWorkModePanel);
+        
+        mMainFrame.add(mTargetPanel);
         
         mMainFrame.add(mGenerateButton);
         
@@ -177,23 +197,30 @@ public class WorkUISwing {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (mJavaPathLabel.getText().endsWith(".java") && mXmlPathLabel.getText().endsWith(".xml")) {
-                    if (mCodeGenerator.generate(mJavaPathLabel.getText(), mXmlPathLabel.getText(), mWorkMode)) {
-                        mResultLabel.setText("成功");
-                        mResultDialog.setVisible(true);
-                    } else {
-                        mResultLabel.setText("失败");
-                        mResultDialog.setVisible(true);
+                    if (mTarget.getTarget().equals(Target.T.ACTIVITY)) {
+                        if (mCodeGenerator4Activity.generate(mJavaPathLabel.getText(), mXmlPathLabel.getText(), mWorkMode)) {
+                            mResultLabel.setText("成功");
+                            mResultDialog.setVisible(true);
+                        } else {
+                            mResultLabel.setText("失败");
+                            mResultDialog.setVisible(true);
+                        }
+                        return;
+                    }
+                    if (mTarget.getTarget().equals(Target.T.ADAPTER)) {
+                        if (mCodeGenerator4Adapter.generate(mJavaPathLabel.getText(), mXmlPathLabel.getText(), mWorkMode)) {
+                            mResultLabel.setText("成功");
+                            mResultDialog.setVisible(true);
+                        } else {
+                            mResultLabel.setText("失败");
+                            mResultDialog.setVisible(true);
+                        }
+                        return;
                     }
                 } else {
                     mResultLabel.setText("请选择文件");
                     mResultDialog.setVisible(true);
                 }
-            }
-        });
-        
-        mWorkModeComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
             }
         });
         mWorkModeComboBox.addItemListener(new ItemListener() {
@@ -202,6 +229,14 @@ public class WorkUISwing {
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     mWorkMode = (WorkMode) e.getItem();
+                }
+            }
+        });
+        mTargetComboBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    mTarget = (Target) e.getItem();
                 }
             }
         });

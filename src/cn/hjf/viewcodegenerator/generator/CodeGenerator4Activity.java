@@ -1,18 +1,19 @@
-package cn.hjf.viewcodegenerator;
+package cn.hjf.viewcodegenerator.generator;
 
 import java.io.File;
 
 import cn.hjf.viewcodegenerator.model.WorkMode;
+import cn.hjf.viewcodegenerator.writer.CodeWriter4Activity;
 import cn.hjf.viewcodegenerator.xmlparser.FieldParserFactory;
 import cn.hjf.viewcodegenerator.xmlparser.IFieldParser;
 
-public class CodeGenerator {
+public class CodeGenerator4Activity {
     
     private IFieldParser mFieldParser;
-    private CodeWriter mCodeWriter;
+    private CodeWriter4Activity mCodeWriter;
     
-    public CodeGenerator() {
-        mCodeWriter = new CodeWriter();
+    public CodeGenerator4Activity() {
+        mCodeWriter = new CodeWriter4Activity();
     }
     
     public boolean generate(String javaFilePath, String xmlFilePath, WorkMode workMode) {

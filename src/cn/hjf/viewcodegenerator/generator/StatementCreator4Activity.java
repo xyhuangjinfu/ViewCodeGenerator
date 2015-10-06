@@ -1,13 +1,13 @@
-package cn.hjf.viewcodegenerator;
+package cn.hjf.viewcodegenerator.generator;
 
 import cn.hjf.viewcodegenerator.model.Field;
 
-public class StatementCreator {
+public class StatementCreator4Activity {
 
-    private FieldTransfer mFieldTransfer;
+    private FieldTransfer4Activity mFieldTransfer;
 
-    public StatementCreator() {
-        mFieldTransfer = new FieldTransfer();
+    public StatementCreator4Activity() {
+        mFieldTransfer = new FieldTransfer4Activity();
     }
 
     public String createDeclare(Field field) {
