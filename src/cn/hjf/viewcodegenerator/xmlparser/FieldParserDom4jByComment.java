@@ -34,6 +34,7 @@ public class FieldParserDom4jByComment implements IFieldParser {
      */
     @Override
     public List<Field> parse(File xmlFile) {
+        mFields.clear();
         FileInputStream fileinput = null;
         Document document = null;
         try {

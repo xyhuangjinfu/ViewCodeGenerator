@@ -33,6 +33,7 @@ public class FieldParserDom4j implements IFieldParser {
      */
     @Override
     public List<Field> parse(File xmlFile) {
+        mFields.clear();
         FileInputStream fileinput = null;
         Document document = null;
         try {
