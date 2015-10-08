@@ -19,9 +19,15 @@ public class FieldTransfer4Adapter {
         // 格式化变量名
         int length = words.length;
         if (length == 1) {
-            
+            // 拼接单词
+            sb.append(words[0]);
         } else {
-            for (int i = 1; i < length; i++) {
+            // 拼接单词
+            sb.append(words[1]);
+            if (length == 2) {
+                return sb.toString();
+            }
+            for (int i = 2; i < length; i++) {
                 StringBuffer stringbf = new StringBuffer();
                 Matcher matcher = Pattern.compile("([a-z])([a-z]*)", Pattern.CASE_INSENSITIVE).matcher(words[i]);
                 while (matcher.find()) {
