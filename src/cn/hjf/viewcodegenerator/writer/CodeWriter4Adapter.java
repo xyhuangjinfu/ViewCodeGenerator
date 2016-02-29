@@ -10,7 +10,7 @@ import cn.hjf.viewcodegenerator.generator.IStatementCreator;
 import cn.hjf.viewcodegenerator.generator.StatementCreator4Adapter;
 import cn.hjf.viewcodegenerator.model.Field;
 
-public class CodeWriter4Adapter {
+public class CodeWriter4Adapter implements ICodeWriter{
 
     private IStatementCreator mStatementCreator;
 
@@ -18,6 +18,7 @@ public class CodeWriter4Adapter {
         mStatementCreator = new StatementCreator4Adapter();
     }
 
+    @Override
     public boolean write(File javaFile, List<Field> fields) {
         boolean result = true;
         OutputStreamWriter osw = null;

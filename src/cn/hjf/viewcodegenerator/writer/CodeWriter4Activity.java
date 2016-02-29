@@ -10,7 +10,7 @@ import cn.hjf.viewcodegenerator.generator.IStatementCreator;
 import cn.hjf.viewcodegenerator.generator.StatementCreator4Activity;
 import cn.hjf.viewcodegenerator.model.Field;
 
-public class CodeWriter4Activity {
+public class CodeWriter4Activity implements ICodeWriter {
 
     private IStatementCreator mStatementCreator;
 
@@ -18,12 +18,13 @@ public class CodeWriter4Activity {
         mStatementCreator = new StatementCreator4Activity();
     }
 
+    @Override
     public boolean write(File javaFile, List<Field> fields) {
         boolean result = true;
         OutputStreamWriter osw = null;
         try {
             osw = new OutputStreamWriter(new FileOutputStream(javaFile, true), "UTF-8");
-            
+
             osw.write("//自动生成代码");
             osw.write("\n");
 
