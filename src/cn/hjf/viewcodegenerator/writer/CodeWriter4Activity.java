@@ -6,12 +6,13 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.List;
 
+import cn.hjf.viewcodegenerator.generator.IStatementCreator;
 import cn.hjf.viewcodegenerator.generator.StatementCreator4Activity;
 import cn.hjf.viewcodegenerator.model.Field;
 
 public class CodeWriter4Activity {
 
-    private StatementCreator4Activity mStatementCreator;
+    private IStatementCreator mStatementCreator;
 
     public CodeWriter4Activity() {
         mStatementCreator = new StatementCreator4Activity();

@@ -2,7 +2,7 @@ package cn.hjf.viewcodegenerator.generator;
 
 import cn.hjf.viewcodegenerator.model.Field;
 
-public class StatementCreator4Adapter {
+public class StatementCreator4Adapter implements IStatementCreator {
 
     private AbsFieldTransfer mFieldTransfer;
 
@@ -10,6 +10,7 @@ public class StatementCreator4Adapter {
         mFieldTransfer = new FieldTransfer4Adapter();
     }
 
+    @Override
     public String createDeclare(Field field) {
         // 存放结果
         StringBuilder sb = new StringBuilder();
@@ -26,6 +27,7 @@ public class StatementCreator4Adapter {
         return sb.toString();
     }
 
+    @Override
     public String createFindViewById(Field field) {
         // 存放结果
         StringBuilder sb = new StringBuilder();
