@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileFilter;
 
+import cn.hjf.viewcodegenerator.generator.AbsCodeGenerator;
 import cn.hjf.viewcodegenerator.generator.CodeGenerator4Activity;
 import cn.hjf.viewcodegenerator.generator.CodeGenerator4Adapter;
 import cn.hjf.viewcodegenerator.model.Target;
@@ -46,8 +47,8 @@ public class WorkUISwing {
     private JPanel mTargetPanel;
     private JLabel mTargetLabel;
     
-    private CodeGenerator4Activity mCodeGenerator4Activity;
-    private CodeGenerator4Adapter mCodeGenerator4Adapter;
+    private AbsCodeGenerator mCodeGenerator4Activity;
+    private AbsCodeGenerator mCodeGenerator4Adapter;
     private OS mOS;
     
     private String mLastPath;
