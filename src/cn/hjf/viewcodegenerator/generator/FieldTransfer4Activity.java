@@ -3,12 +3,9 @@ package cn.hjf.viewcodegenerator.generator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class FieldTransfer4Activity {
+public class FieldTransfer4Activity extends AbsFieldTransfer {
 
-    public FieldTransfer4Activity() {
-
-    }
-
+    @Override
     public String getNameById(String id) {
         // 存放结果
         StringBuilder sb = new StringBuilder();
@@ -31,15 +28,4 @@ public class FieldTransfer4Activity {
         }
         return sb.toString();
     }
-
-    public String getIdForR(String id) {
-        // 存放结果
-        StringBuilder sb = new StringBuilder();
-        // 得到id名称
-        String name = id.substring(id.indexOf('/') + 1);
-        sb.append("R.id.");
-        sb.append(name);
-        return sb.toString();
-    }
-
 }

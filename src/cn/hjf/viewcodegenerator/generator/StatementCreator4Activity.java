@@ -4,7 +4,7 @@ import cn.hjf.viewcodegenerator.model.Field;
 
 public class StatementCreator4Activity {
 
-    private FieldTransfer4Activity mFieldTransfer;
+    private AbsFieldTransfer mFieldTransfer;
 
     public StatementCreator4Activity() {
         mFieldTransfer = new FieldTransfer4Activity();
