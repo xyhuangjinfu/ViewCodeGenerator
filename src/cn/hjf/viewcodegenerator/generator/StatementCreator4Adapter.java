@@ -31,7 +31,7 @@ public class StatementCreator4Adapter implements IStatementCreator {
     public String createFindViewById(Field field) {
         // 存放结果
         StringBuilder sb = new StringBuilder();
-        sb.append("viewHolder.");
+        sb.append("holder.");
         sb.append(mFieldTransfer.getNameById(field.getId()));
         sb.append(" = ");
         sb.append("(");

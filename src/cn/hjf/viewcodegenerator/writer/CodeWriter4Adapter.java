@@ -28,7 +28,7 @@ public class CodeWriter4Adapter implements ICodeWriter{
             osw.write("//自动生成代码");
             osw.write("\n");
 
-            osw.write("private class ViewHolder {");
+            osw.write("private static class ViewHolder {");
             osw.write("\n");
             for (Field field : fields) {
                 osw.write("    " + mStatementCreator.createDeclare(field));
