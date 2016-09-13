@@ -62,7 +62,7 @@ public class WorkUISwing {
     }
     
     public void show() {
-        mMainFrame = new JFrame("代码生成器 V0.1");
+        mMainFrame = new JFrame("代码生成器 V0.2");
         mMainFrame.setLocation(500, 300);
         mMainFrame.setLayout(new GridLayout(5, 1));
         mMainFrame.addWindowListener(new WindowListener() {
